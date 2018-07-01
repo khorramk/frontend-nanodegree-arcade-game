@@ -40,7 +40,15 @@ class Player {
     constructor(_x, _y, _speed) {
         this._x += _x;
         this._y += _y;
-        
+        this.sprite = "images/boy.png"
+    }
+
+    update(dt){
+
+    }
+
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this._x, this._y);
     }
 }
 

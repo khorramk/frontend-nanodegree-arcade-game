@@ -16,7 +16,7 @@ var fps, fpsInterval, startTime, now, then, elapsed;
 // Enemies our player must avoid
 
 class Enemy {
-    constructor(_x = 100, _y = 83, _speed, _width=50, height=60) {
+    constructor(_x = 100, _y = 83, _speed, _width=50, _height=60) {
         // Variables applied to each of our instances go here,
         // we've provided one for you to get started
         // The image/sprite for our enemies, this uses

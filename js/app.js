@@ -1,5 +1,20 @@
+let pos = 0;
+let loc = 83;
+var allEnemies = [
+];
+var framesPerSecond = 2500;
+var requestID;
+var requestAnimationFrame = window.requestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    Window.msRequestAnimationFrame;
+var stop = false;
+var frameCount = 0;
+
+var fps, fpsInterval, startTime, now, then, elapsed;
+
 // Enemies our player must avoid
-var allEnemies = [];
+
 class Enemy {
     constructor(_x = 100, _y = 83, _speed) {
         // Variables applied to each of our instances go here,

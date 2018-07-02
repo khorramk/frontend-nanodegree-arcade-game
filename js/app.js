@@ -131,3 +131,59 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+startAnimating(100);
+
+
+
+function startAnimating(fps) {
+    fpsInterval = 1000 / fps;
+    then = Date.now();
+    startTime = then;
+    console.log(startTime);
+    animate();
+}
+
+
+function animate() {
+
+    // stop
+    if (stop) {
+        return;
+    }
+
+    // request another frame
+
+    requestAnimationFrame(animate);
+
+    // calc elapsed time since last loop
+
+    now = Date.now();
+    elapsed = now - then;
+
+    // if enough time has elapsed, draw the next frame
+
+    if (elapsed > fpsInterval) {
+
+        // Get ready for next frame by setting then=now, but...
+        // Also, adjust for fpsInterval not being multiple of 16.67
+        then = now - (elapsed % fpsInterval);
+
+        // draw stuff here
+        allEnemies.forEach(function (enem) {
+            enem._x = pos;
+        })
+        //allEnemies[5]._x = pos;
+        pos += 1;
+        if (Math.abs(pos) === 505) {
+            pos = 0;
+
+        }
+
+        // TESTING...Report #seconds since start and achieved fps.
+        var sinceStart = now - startTime;
+        var currentFps = Math.round(1000 / (sinceStart / ++frameCount) * 100) / 100;
+        console.log("Elapsed time= " + Math.round(sinceStart / 1000 * 100) / 100 + " secs @ " + currentFps + " fps.");
+
+    }
+}

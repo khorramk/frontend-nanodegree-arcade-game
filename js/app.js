@@ -40,6 +40,7 @@ class Player {
     constructor(_x, _y, _speed) {
         this._x += _x;
         this._y += _y;
+        this._speed = _speed;
         this.sprite = "images/boy.png"
     }
 

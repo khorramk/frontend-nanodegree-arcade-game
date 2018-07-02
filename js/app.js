@@ -98,6 +98,7 @@ class Player {
             ){
                 reset();
                 stop = false;
+                
             } else {
                 stop = true;
             }
@@ -151,7 +152,7 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
+player.collision();
 startAnimating(100);
 
 

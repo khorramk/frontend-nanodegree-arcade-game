@@ -16,7 +16,7 @@ var fps, fpsInterval, startTime, now, then, elapsed;
 // Enemies our player must avoid
 
 class Enemy {
-    constructor(_x = 100, _y = 83, _speed) {
+    constructor(_x = 100, _y = 83, _speed, _width=50, height=60) {
         // Variables applied to each of our instances go here,
         // we've provided one for you to get started
         // The image/sprite for our enemies, this uses
@@ -24,8 +24,8 @@ class Enemy {
         this.speed = _speed;
         this._y += _y;
 
-        this.width = 50;
-        this.height = 60
+        this.width = _width;
+        this.height = _height;
         //iterate to increase the speed of movement
 
         // The image/sprite for our enemies, this uses
@@ -83,6 +83,26 @@ class Player {
             case 'down':
                 this.update(this._y -= 83);
         }
+    }
+
+    collision() {
+        var boy = this;
+        allEnemies.forEach(function(bugs){
+            if (
+                boy._x < bug._x + bugs._width &&
+                boy._x + boy._width > bugs._x &&
+                boy._y < bugs._y + bugs._height &&
+                boy._height + boy._y > bugs._y
+
+            
+            ){
+                reset();
+                stop = false;
+            } else {
+                stop = true;
+            }
+        })
+       
     }
 }
 

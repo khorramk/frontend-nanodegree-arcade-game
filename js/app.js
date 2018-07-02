@@ -29,6 +29,8 @@ class Enemy {
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+
+    
 }
 
 
@@ -50,6 +52,22 @@ class Player {
 
     render(){
         ctx.drawImage(Resources.get(this.sprite), this._x, this._y);
+    }
+
+    handleInput(obj) {
+        switch (obj) {
+            case 'left':
+                this.update(this._x -= 101);
+                break;
+            case 'right':
+                this.update(this._x += 101);
+                break;
+            case 'up':
+                this.update(this._y += 83);
+                break;
+            case 'down':
+                this.update(this._y -= 83);
+        }
     }
 }
 

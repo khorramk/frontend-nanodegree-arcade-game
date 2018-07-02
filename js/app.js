@@ -89,7 +89,7 @@ class Player {
         var boy = this;
         allEnemies.forEach(function(bugs){
             if (
-                boy._x < bug._x + bugs._width &&
+                boy._x < bugs._x + bugs._width &&
                 boy._x + boy._width > bugs._x &&
                 boy._y < bugs._y + bugs._height &&
                 boy._height + boy._y > bugs._y

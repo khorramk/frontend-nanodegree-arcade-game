@@ -72,8 +72,35 @@ class Player {
 }
 
 // Now instantiate your objects.
+Player.prototype.constructor = Player;
+
+Enemy.prototype.constructor = Enemy;
 // Place all enemy objects in an array called allEnemies
+(function () {
+    // const bug = new Enemy(0, 83);
+
+    //
+    for (let i = 0; i < 6; i++) {
+        new Enemy();
+    }
+
+})();
+//setting the starting position for enemies
+(function () {
+    let start = -1;
+    for (let i = 0; i < 3; i++) {
+        start += 83;
+        allEnemies[i]._y = start;
+        /*for(let j= i + 3; i < allEnemies.length; i++){
+          allEnemies[i]._y = start;
+            console.log(allEnemies[i]);
+        }*/
+    }
+
+})();
+
 // Place the player object in a variable called player
+var player = new Player(303, 415);
 
 
 

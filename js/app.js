@@ -265,13 +265,14 @@ function
         // draw stuff here
         allEnemies.forEach(function (enem) {
             enem._x = pos;
+            pos += 1;
+            if (Math.abs(pos) === 500) {
+                pos = 0;
+
+            }
         })
         //allEnemies[5]._x = pos;
-        pos += 1;
-        if (Math.abs(pos) === 505) {
-            pos = 0;
-
-        }
+        
 
         // TESTING...Report #seconds since start and achieved fps.
         var sinceStart = now - startTime;
@@ -280,6 +281,8 @@ function
 
     }
 }
+
+
 
 
 

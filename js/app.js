@@ -134,11 +134,24 @@ class Player {
     }
 
     win(turn){
-         finish = turn;
-        if(finish === 0){
+        const finish = turn;
+        if(this._y === -90){
+            reset();
+
+
            this._y = 450;
+           this._x = 303;
+            document.removeEventListener('keyup', function (e) {
+                var allowedKeys = {
+                    37: 'left',
+                    40: 'up',
+                    39: 'right',
+                    38: 'down'
+                };
+                player.handleInput(allowedKeys[e.keyCode]);
+            })
         }else{
-            return turn
+            return turn;
         }
     }
 }
@@ -192,17 +205,21 @@ function moveplayer(){
     });
 }
 
+//put the function so can later use for other functionality
 moveplayer();
-
+//animating the enemies as window loads
 startAnimating(100);
 
-
+//
 
 function startAnimating(fps) {
+    //frame per interval
     fpsInterval = 1000 / fps;
+    //getting the current dates
     then = Date.now();
     startTime = then;
     console.log(startTime);
+    //start aniamting
     animate();
 }
 
@@ -254,8 +271,15 @@ function
     }
 }
 
+//reset function for displaying modal and repeating the game
+function reset(){
 
+    const modal = document.getElementById('myModal');
+    //adding the modal to pop up
+    modal.classList.add("pop-up");
 
+    return true;
+}
 
 
 

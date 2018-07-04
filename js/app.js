@@ -16,16 +16,17 @@ var frameCount = 0;
 
 var fps, fpsInterval, startTime, now, then, elapsed;
 class Enemy {
-    constructor(_x = 100, _y = 83, _speed) {
+    constructor(_x = 100, _y = 70, _speed) {
         // Variables applied to each of our instances go here,
         // we've provided one for you to get started
         this._x += _x;
 
         this.speed = _speed;
         this._y += _y;
-
-        this.width = 50;
-        this.height = 60
+        this.image = new Image();
+        this.image.src = this.sprite;
+        this._w = 70;
+        this._h = 100;
         //iterate to increase the speed of movement
 
         // The image/sprite for our enemies, this uses
@@ -50,13 +51,26 @@ class Enemy {
 
     }
 
+    collision(turn){
+        if(this._x > player._x + player._w &&
+           this._x + this._w > player._x &&
+           this._y < player._y + player._h &&
+           this._h + this._y > player._y 
+        ){
+            player._y = 450;
+            player._x = 303;
+        }else{
 
+            player.win(turn);
+        
+        }
+    }
 
     // Draw the enemy on the screen, required method for game
 
     render() {
 
-        ctx.drawImage(Resources.get(this.sprite), this._x, this._y);
+        ctx.drawImage(Resources.get(this.sprite), this._x, this._y, this._w, this._h);
 
 
     }
@@ -74,31 +88,32 @@ class Player {
         this._x = _x;
         this._y = _y;
         this.im = 'images/char-boy.png';
+        this.image = new Image();
+        this.image.src = this.im;
+        this._w = 110;
+        this._h = 120;
+
     }
 
 
     //render method
     render() {
 
-        ctx.drawImage(Resources.get(this.im), this._x, this._y);
+        ctx.drawImage(Resources.get(this.im), this._x, this._y, this._w, this._h
+    );
 
 
 
 
     }
 
-    collision() {
-        if (this._x > player._x && this._y > player._y) {
-            reset();
-            running = false;
-        } else {
-            running = true;
-        }
-    }
+
     //updtae method
     update(dt) {
-
-        return dt;
+        allEnemies.forEach(function(enem){
+              enem.collision(dt);
+        });
+      
     }
 
     //handling input
@@ -111,10 +126,19 @@ class Player {
                 this.update(this._x += 101);
                 break;
             case 'up':
-                this.update(this._y += 83);
+                this.update(this._y += 60);
                 break;
             case 'down':
-                this.update(this._y -= 83);
+                this.update(this._y -= 90);
+        }
+    }
+
+    win(turn){
+         finish = turn;
+        if(finish === 0){
+           this._y = 450;
+        }else{
+            return turn
         }
     }
 }
@@ -124,7 +148,7 @@ Player.prototype.constructor = Player;
 Enemy.prototype.constructor = Enemy;
 // Now instantiate your objects.
 // Place the player object in a variable called player
-var player = new Player(303, 415);
+var player = new Player(303, 450);
 var bug = new Enemy();
 
 // Place all enemy objects in an array called allEnemies
@@ -138,6 +162,7 @@ var bug = new Enemy();
 
 })();
 
+// positioning the allthe enemies
 (function () {
     let start = -1;
     for (let i = 0; i < 3; i++) {
@@ -152,77 +177,22 @@ var bug = new Enemy();
 })();
 
 
-
-
-//animating the enemies
-
-
-
-function animateTwo() {
-
-    setTimeout(function () {
-        requestAnimationFrame(animate);
-
-        // animating/drawing code goes here
-
-        //
-        allEnemies[1]._x = pos;
-        //allEnemies[5]._x = pos;
-        pos += 1;
-        if (Math.abs(pos) === 505) {
-            pos = 0;
-
-
-
-        }
-
-
-    }, 1000 / framesPerSecond);
-}
-
-function animateThree() {
-
-    setTimeout(function () {
-        requestAnimationFrame(animate);
-
-        // animating/drawing code goes here
-
-        //
-        allEnemies[2]._x = pos;
-        //allEnemies[5]._x = pos;
-        pos += 1;
-        if (Math.abs(pos) === 505) {
-            pos = 0;
-
-        }
-
-
-
-
-    }, 1000 / framesPerSecond);
-
-}
-
-
-
-
-
-
-
-
 //enemy.render();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function (e) {
-    var allowedKeys = {
-        37: 'left',
-        40: 'up',
-        39: 'right',
-        38: 'down'
-    };
-    player.handleInput(allowedKeys[e.keyCode]);
-});
+function moveplayer(){
+    document.addEventListener('keyup', function (e) {
+        var allowedKeys = {
+            37: 'left',
+            40: 'up',
+            39: 'right',
+            38: 'down'
+        };
+        player.handleInput(allowedKeys[e.keyCode]);
+    });
+}
 
+moveplayer();
 
 startAnimating(100);
 
@@ -265,19 +235,21 @@ function
         // draw stuff here
         allEnemies.forEach(function (enem) {
             enem._x = pos;
-            pos += 1;
-            if (Math.abs(pos) === 500) {
-                pos = 0;
+            
 
-            }
+           
         })
         //allEnemies[5]._x = pos;
-        
+        pos += 5;
+        if (Math.abs(pos) === 500) {
+            pos = 0;
+
+        }
 
         // TESTING...Report #seconds since start and achieved fps.
         var sinceStart = now - startTime;
         var currentFps = Math.round(1000 / (sinceStart / ++frameCount) * 100) / 100;
-        console.log("Elapsed time= " + Math.round(sinceStart / 1000 * 100) / 100 + " secs @ " + currentFps + " fps.");
+        //console.log("Elapsed time= " + Math.round(sinceStart / 1000 * 100) / 100 + " secs @ " + currentFps + " fps.");
 
     }
 }

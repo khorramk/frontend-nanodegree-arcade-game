@@ -141,7 +141,7 @@ class Player {
 
            this._y = 450;
            this._x = 303;
-            document.removeEventListener('keyup', function (e) {
+        document.removeEventListener('keyup', function (e) {
                 var allowedKeys = {
                     37: 'left',
                     40: 'up',
@@ -149,7 +149,7 @@ class Player {
                     38: 'down'
                 };
                 player.handleInput(allowedKeys[e.keyCode]);
-            })
+            }, true);
         }else{
             return turn;
         }

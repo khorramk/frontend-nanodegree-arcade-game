@@ -23,15 +23,14 @@ class Enemy {
 
         this.speed = _speed;
         this._y += _y;
-        this.image = new Image();
-        this.image.src = this.sprite;
-        this._w = 70;
-        this._h = 100;
+        this.sprite = 'images/enemy-bug.png';
+        this._w = 101;      
+        this._h  = 171;
         //iterate to increase the speed of movement
 
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
-        this.sprite = 'images/enemy-bug.png';
+        
         allEnemies.push(this)
         //allEnemies.push(this);
 
@@ -52,13 +51,13 @@ class Enemy {
     }
 
     collision(turn){
-        if(this._x > player._x + player._w &&
-           this._x + this._w > player._x &&
-           this._y < player._y + player._h &&
-           this._h + this._y > player._y 
+        if(this._x > player._x + 80 &&//player._w &&
+           this._x + 80 > player._x &&
+           this._y < player._y + 60 && //player._h &&
+           60 + this._y > player._y 
         ){
-            player._y = 450;
-            player._x = 303;
+            player._y = 404;
+            player._x = 202;
         }else{
 
             player.win(turn);
@@ -84,14 +83,13 @@ function getRandomInt(min, max) {
 // a handleInput() method.
 
 class Player {
-    constructor(_x, _y) {
+    constructor(_x, _y, sprite, _h, _w) {
         this._x = _x;
         this._y = _y;
-        this.im = 'images/char-boy.png';
-        this.image = new Image();
-        this.image.src = this.im;
-        this._w = 110;
-        this._h = 120;
+        this.sprite = 'images/char-boy.png';
+        
+        this._w = 101;
+        this._h = 171;
 
     }
 
@@ -99,8 +97,7 @@ class Player {
     //render method
     render() {
 
-        ctx.drawImage(Resources.get(this.im), this._x, this._y, this._w, this._h
-    );
+        ctx.drawImage(Resources.get(this.sprite), this._x, this._y, this._w, this._h);
 
 
 
@@ -126,10 +123,10 @@ class Player {
                 this.update(this._x += 101);
                 break;
             case 'up':
-                this.update(this._y += 60);
+                this.update(this._y += 64);
                 break;
             case 'down':
-                this.update(this._y -= 90);
+                this.update(this._y -= 74);
         }
     }
 
@@ -139,8 +136,8 @@ class Player {
             reset();
 
 
-           this._y = 450;
-           this._x = 303;
+           this._y = 404;
+           this._x = 202;
         document.removeEventListener('keyup', function (e) {
                 var allowedKeys = {
                     37: 'left',
@@ -161,7 +158,7 @@ Player.prototype.constructor = Player;
 Enemy.prototype.constructor = Enemy;
 // Now instantiate your objects.
 // Place the player object in a variable called player
-var player = new Player(303, 450);
+var player = new Player(202, 404);
 var bug = new Enemy();
 
 // Place all enemy objects in an array called allEnemies
@@ -179,7 +176,7 @@ var bug = new Enemy();
 (function () {
     let start = -1;
     for (let i = 0; i < 3; i++) {
-        start += 83;
+        start += 75;
         allEnemies[i]._y = start;
         /*for(let j= i + 3; i < allEnemies.length; i++){
           allEnemies[i]._y = start;

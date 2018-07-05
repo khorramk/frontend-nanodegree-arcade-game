@@ -38,11 +38,6 @@ class Enemy {
     // Parameter: dt, a time delta between ticks
 
 
-    /*spawnAtRandom() {
-      // add your code here.
-      setTimeout(this.spawnAtRandom,  minimum + (Math.random() * (miliseconds - minimum)));
-    };*/
-
 
     update(dt) {
 
@@ -132,12 +127,12 @@ class Player {
 
     win(turn){
         const finish = turn;
-        if(this._y === -90){
+        if(this._y <= -6){
             reset();
+           this._y = 0;
 
-
-           this._y = 404;
-           this._x = 202;
+           //this._y = 404;
+           //this._x = 202;
         document.removeEventListener('keyup', function (e) {
                 var allowedKeys = {
                     37: 'left',
@@ -273,6 +268,19 @@ function reset(){
 
     const modal = document.getElementById('myModal');
     //adding the modal to pop up
+    const btn = document.getElementById("myBtn");
+    const clsbtn = document.querySelector(".close");
+    clsbtn.addEventListener("click", function (){
+          modal.classList.remove("pop-up");
+          modal.classList.add("gone");
+    });
+
+    btn.addEventListener('click', function () {
+
+        modal.classList.remove("pop-up");
+        modal.classList.add("gone");
+        window.location.reload(true);
+    });
     modal.classList.add("pop-up");
 
     return true;

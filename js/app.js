@@ -115,10 +115,10 @@ class Player {
 
     //updtae method
     update(dt) {
-        allEnemies.forEach(function(enem){
-              enem.collision(dt);
+
+        allEnemies.forEach(function (enem) {
+            enem.collision(dt);
         });
-      
     }
 
     //handling input
@@ -144,20 +144,31 @@ class Player {
             reset();
            this._y = 0;
 
-           //this._y = 404;
-           //this._x = 202;
-        document.removeEventListener('keyup', function (e) {
-                var allowedKeys = {
-                    37: 'left',
-                    40: 'up',
-                    39: 'right',
-                    38: 'down'
-                };
-                player.handleInput(allowedKeys[e.keyCode]);
-            }, true);
+        }
+        
+        if (this._x > 500) {
+                this._x = 404;
+        }
+        
+        if (this._y >= 404) {
+                this._y = 404;
+            }
+
+        if (this._x > 500) {
+                this._x = 500;
+            }
+
+        if(this._x < -1){
+            this._x = 0;
         }else{
             return turn;
         }
+
+        
+
+           
+
+            
     }
 }
 //instanting for changing the prototype method

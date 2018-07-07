@@ -14,8 +14,10 @@ For detailed instructions on how to get started, check out this [guide](https://
 
 ## How to play the game
 
-to get started on the game click on the canvas
-then start moving the player with arrow keys on your keyboard
-reach the water to win the game and beware of the bugs getting in your way
+#To get started on the game:
+
+1.click on the canvas
+2.then start moving the player with arrow keys on your keyboard
+3.reach the water to win the game and beware of the bugs getting in your way
 
 [play the game:enjoy](https://khorramk.github.io/frontend-nanodegree-arcade-game/)

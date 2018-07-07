@@ -2,6 +2,8 @@
 // 10 seconds
 let numcoor = [];
 let pos = 0;
+let pos2 = 0;
+let pos3 = 0;
 let loc = 83;
 var allEnemies = [
 ];
@@ -16,12 +18,12 @@ var frameCount = 0;
 
 var fps, fpsInterval, startTime, now, then, elapsed;
 class Enemy {
-    constructor(_x = 100, _y = 70, _speed) {
+    constructor(_x = 0, _y = 0, _speed) {
         // Variables applied to each of our instances go here,
         // we've provided one for you to get started
         this._x += _x;
 
-        this.speed = _speed;
+        this._speed += _speed;
         this._y += _y;
         this.sprite = 'images/enemy-bug.png';
         this._w = 101;      
@@ -31,7 +33,7 @@ class Enemy {
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         
-        allEnemies.push(this)
+        
         //allEnemies.push(this);
 
     }  // Update the enemy's position, required method for game
@@ -41,20 +43,29 @@ class Enemy {
 
     update(dt) {
        
-        allEnemies.forEach(function (enem) {
-            enem._x = pos;
-
-
-
-        })
+        allEnemies[0]._x = pos;
+        allEnemies[1]._x = pos2;
+        allEnemies[2]._x = pos3;
         //allEnemies[5]._x = pos;
-      pos += 1
+        pos3 += 0.5;
+        pos2 += 1;
+      pos += 2;
         if (Math.abs(pos) === 500) {
             pos = 0;
+            
+        }
 
+        if(Math.abs(pos2)=== 500){
+            pos2 = 0;
+        }
+
+        if(Math.abs(pos3) === 500){
+            pos3 = 0;
         }
 
         return dt;
+
+       
 
     }
 
@@ -178,16 +189,17 @@ Enemy.prototype.constructor = Enemy;
 // Now instantiate your objects.
 // Place the player object in a variable called player
 var player = new Player(202, 404);
-var bug = new Enemy();
+var bug = new Enemy(100, 70, 1);
+var bug2 = new Enemy(100, 70, 0.1);
+var bug3 = new Enemy(100, 70, 4);
 
 // Place all enemy objects in an array called allEnemies
 (function () {
     // const bug = new Enemy(0, 83);
 
-    //
-    for (let i = 0; i < 6; i++) {
-        new Enemy();
-    }
+   allEnemies.push(bug);
+   allEnemies.push(bug2);
+   allEnemies.push(bug3);
 
 })();
 

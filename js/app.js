@@ -7,14 +7,9 @@ let pos3 = 0;
 let loc = 83;
 var allEnemies = [
 ];
-var framesPerSecond = 2500;
-var requestID;
-var requestAnimationFrame = window.requestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    Window.msRequestAnimationFrame;
-var stop = false;
-var frameCount = 0;
+var right = null;
+var left = null;
+
 
 var fps, fpsInterval, startTime, now, then, elapsed;
 class Enemy {
@@ -28,6 +23,12 @@ class Enemy {
         this.sprite = 'images/enemy-bug.png';
         this._w = 101;      
         this._h  = 171;
+        //this.leftX = getLeft(data, this._w, this._h);
+        //this.rightX = getRight(data, this._w, this._h);
+        //this.topY = getTop(data, this._w, this._h);
+        //this.bottomY = getBottom(data, this._w, this._h); 
+        this.radius = Math.sqrt((Math.pow(((this._w * this._h) / 2), 2) * 2)); 
+    
         //iterate to increase the speed of movement
 
         // The image/sprite for our enemies, this uses
@@ -70,17 +71,31 @@ class Enemy {
     }
 
     collision(turn){
+
+        /*const dx = (this._x + this.radius) - (this._x + this.radius);
+        const dy = (this._y + this.radius) - (this._y + this.radius);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < this.radius + player.radius) {
+            // collision detected!
+            
+        } else{
+            player.win(turn);
+        }*/
+
+             
+
+        
+
         if(this._x > player._x + 80 &&//player._w &&
            this._x + 80 > player._x &&
-           this._y < player._y + 60 && //player._h &&
-           60 + this._y > player._y 
+           this._y < player._y + 100 && //player._h &&
+           100 + this._y > player._y 
         ){
             player._y = 404;
             player._x = 202;
         }else{
-
-            player.win(turn);
-        
+           player.win(turn);
         }
     }
 
@@ -109,6 +124,8 @@ class Player {
         
         this._w = 101;
         this._h = 171;
+        this.radius = Math.sqrt((Math.pow(((this._w * this._h) / 2), 2) * 2));
+       
 
     }
 
@@ -261,3 +278,38 @@ function reset(){
 
 
 
+function getLeft(data, width, height) {
+    for (var x = 0; x < width; x++)
+        for (var y = 0; y < height; y++) {
+            if (data[(width * y + x) * 4 + 3] > 0) {
+                return (x);
+            }
+        }
+}
+
+function getRight(data, width, height) {
+    for (var x = width - 1; x >= 0; x--)
+        for (var y = height - 1; y >= 0; y--) {
+            if (data[(width * y + x) * 4 + 3] > 0) {
+                return (x);
+            }
+        }
+}
+
+function getTop(data, width, height) {
+    for (var y = 0; y < height; y++)
+        for (var x = 0; x < width; x++) {
+            if (data[(width * y + x) * 4 + 3] > 0) {
+                return (y);
+            }
+        }
+}
+
+function getBottom(data, width, height) {
+    for (var y = height - 1; y >= 0; y--)
+        for (var x = width - 1; x >= 0; x--) {
+            if (data[(width * y + x) * 4 + 3] > 0) {
+                return (y);
+            }
+        }
+}

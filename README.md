@@ -21,9 +21,8 @@ For detailed instructions on how to get started, check out this [guide](https://
  2. make sure clone the project then open the index.html file with your browser.
 
 # playing the game:
-
-1.click on the canvas
-2.then start moving the player with arrow keys on your keyboard
-3.reach the water to win the game and beware of the bugs getting in your way
+ 1. click on the canvas
+ 2. then start moving the player with arrow keys on your keyboard
+ 3. reach the water to win the game and beware of the bugs getting in your way
 
 [play the game:enjoy](https://khorramk.github.io/frontend-nanodegree-arcade-game/)

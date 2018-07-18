@@ -7,9 +7,14 @@ let pos3 = 0;
 let loc = 83;
 var allEnemies = [
 ];
-var right = null;
-var left = null;
-
+var framesPerSecond = 2500;
+var requestID;
+var requestAnimationFrame = window.requestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    Window.msRequestAnimationFrame;
+var stop = false;
+var frameCount = 0;
 
 var fps, fpsInterval, startTime, now, then, elapsed;
 class Enemy {
@@ -20,15 +25,9 @@ class Enemy {
 
         this._speed += _speed;
         this._y += _y;
-        this.sprite = 'images/enemy-bug.png';
-        this._w = 101;      
-        this._h  = 171;
-        //this.leftX = getLeft(data, this._w, this._h);
-        //this.rightX = getRight(data, this._w, this._h);
-        //this.topY = getTop(data, this._w, this._h);
-        //this.bottomY = getBottom(data, this._w, this._h); 
-        this.radius = Math.sqrt((Math.pow(((this._w * this._h) / 2), 2) * 2)); 
-    
+        this.sprite = 'images/enemy-bug-3.png';
+        this._w = 98;      
+        this._h  = 78;
         //iterate to increase the speed of movement
 
         // The image/sprite for our enemies, this uses
@@ -71,31 +70,17 @@ class Enemy {
     }
 
     collision(turn){
-
-        /*const dx = (this._x + this.radius) - (this._x + this.radius);
-        const dy = (this._y + this.radius) - (this._y + this.radius);
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < this.radius + player.radius) {
-            // collision detected!
-            
-        } else{
-            player.win(turn);
-        }*/
-
-             
-
-        
-
-        if(this._x > player._x + 80 &&//player._w &&
-           this._x + 80 > player._x &&
-           this._y < player._y + 100 && //player._h &&
-           100 + this._y > player._y 
+        if(this._x > player._x + player._w &&//player._w &&
+           this._x + this._w > player._x &&
+           this._y < player._y + player._h && //player._h &&
+           this._h + this._y > player._y 
         ){
-            player._y = 404;
-            player._x = 202;
+            player._y = 494;
+            player._x = 220;
         }else{
-           player.win(turn);
+
+            player.win(turn);
+        
         }
     }
 
@@ -120,12 +105,10 @@ class Player {
     constructor(_x, _y, sprite, _h, _w) {
         this._x = _x;
         this._y = _y;
-        this.sprite = 'images/char-boy.png';
+        this.sprite = 'images/e-boy.png';
         
-        this._w = 101;
-        this._h = 171;
-        this.radius = Math.sqrt((Math.pow(((this._w * this._h) / 2), 2) * 2));
-       
+        this._w = 72;
+        this._h = 85;
 
     }
 
@@ -159,10 +142,10 @@ class Player {
                 this.update(this._x += 101);
                 break;
             case 'up':
-                this.update(this._y += 64);
+                this.update(this._y -= 100);
                 break;
             case 'down':
-                this.update(this._y -= 74);
+                this.update(this._y += 100);
         }
     }
 
@@ -178,8 +161,8 @@ class Player {
                 this._x = 404;
         }
         
-        if (this._y >= 404) {
-                this._y = 404;
+        if (this._y >= 494) {
+                this._y = 494;
             }
 
         if (this._x > 500) {
@@ -205,10 +188,10 @@ Player.prototype.constructor = Player;
 Enemy.prototype.constructor = Enemy;
 // Now instantiate your objects.
 // Place the player object in a variable called player
-var player = new Player(202, 404);
-var bug = new Enemy(100, 70, 1);
+var player = new Player(220, 494);
+var bug = new Enemy(100, 90, 1);
 var bug2 = new Enemy(100, 70, 0.1);
-var bug3 = new Enemy(100, 70, 4);
+var bug3 = new Enemy(100, 90, 4);
 
 // Place all enemy objects in an array called allEnemies
 (function () {
@@ -224,7 +207,7 @@ var bug3 = new Enemy(100, 70, 4);
 (function () {
     let start = -1;
     for (let i = 0; i < 3; i++) {
-        start += 75;
+        start += 100;
         allEnemies[i]._y = start;
         /*for(let j= i + 3; i < allEnemies.length; i++){
           allEnemies[i]._y = start;
@@ -242,9 +225,9 @@ function moveplayer(){
     document.addEventListener('keyup', function (e) {
         var allowedKeys = {
             37: 'left',
-            40: 'up',
+            38: 'up',
             39: 'right',
-            38: 'down'
+            40: 'down'
         };
         player.handleInput(allowedKeys[e.keyCode]);
     });
@@ -278,38 +261,3 @@ function reset(){
 
 
 
-function getLeft(data, width, height) {
-    for (var x = 0; x < width; x++)
-        for (var y = 0; y < height; y++) {
-            if (data[(width * y + x) * 4 + 3] > 0) {
-                return (x);
-            }
-        }
-}
-
-function getRight(data, width, height) {
-    for (var x = width - 1; x >= 0; x--)
-        for (var y = height - 1; y >= 0; y--) {
-            if (data[(width * y + x) * 4 + 3] > 0) {
-                return (x);
-            }
-        }
-}
-
-function getTop(data, width, height) {
-    for (var y = 0; y < height; y++)
-        for (var x = 0; x < width; x++) {
-            if (data[(width * y + x) * 4 + 3] > 0) {
-                return (y);
-            }
-        }
-}
-
-function getBottom(data, width, height) {
-    for (var y = height - 1; y >= 0; y--)
-        for (var x = width - 1; x >= 0; x--) {
-            if (data[(width * y + x) * 4 + 3] > 0) {
-                return (y);
-            }
-        }
-}

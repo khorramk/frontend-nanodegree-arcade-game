@@ -1,4 +1,5 @@
 // Enemies our player must avoid
+'use strict';
 // 10 seconds
 let numcoor = [];
 let pos = 0;
@@ -49,7 +50,7 @@ class Enemy {
         //allEnemies[5]._x = pos;
         pos3 += 0.5;
         pos2 += 1;
-      pos += 2;
+        pos += 2;
         if (Math.abs(pos) === 500) {
             pos = 0;
             
@@ -64,19 +65,20 @@ class Enemy {
         }
 
         return dt;
-
-       
-
     }
 
     collision(turn){
-        if(this._x > player._x + player._w &&//player._w &&
+        if(this._x < player._x + player._w &&//player._w &&
            this._x + this._w > player._x &&
            this._y < player._y + player._h && //player._h &&
            this._h + this._y > player._y 
         ){
-            player._y = 494;
-            player._x = 220;
+            setTimeout(function(){
+                player._y = 494;
+                player._x = 220;
+
+            }, 500);
+            
         }else{
 
             player.win(turn);
@@ -194,14 +196,14 @@ var bug2 = new Enemy(100, 70, 0.1);
 var bug3 = new Enemy(100, 90, 4);
 
 // Place all enemy objects in an array called allEnemies
-(function () {
+
     // const bug = new Enemy(0, 83);
 
    allEnemies.push(bug);
    allEnemies.push(bug2);
    allEnemies.push(bug3);
 
-})();
+
 
 // positioning the allthe enemies
 (function () {
@@ -243,7 +245,7 @@ function reset(){
     //adding the modal to pop up
     const btn = document.getElementById("myBtn");
     const clsbtn = document.querySelector(".close");
-    clsbtn.addEventListener("click", function (){
+    clsbtn.addEventListener('click', function (){
           modal.classList.remove("pop-up");
           modal.classList.add("gone");
     });

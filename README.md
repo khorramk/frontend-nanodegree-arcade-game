@@ -14,7 +14,13 @@ For detailed instructions on how to get started, check out this [guide](https://
 
 ## How to play the game
 
-#To get started on the game:
+
+
+# required dependencies:
+ 1. make sure to you have es6 support in your browser as the code written in es6 purely or otherwise convert the code using babel
+ 2. make sure clone the project then open the index.html file with your browser.
+
+# playing the game:
 
 1.click on the canvas
 2.then start moving the player with arrow keys on your keyboard
